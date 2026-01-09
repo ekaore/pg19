@@ -1,0 +1,527 @@
+.addressCheckBlock {
+  padding: 50px 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contentCard {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 32px 48px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 31px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-top: 0;
+  margin-bottom: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.formContainer {
+  margin-bottom: 40px;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.input {
+  flex: 1;
+  padding: 16px 20px;
+  font-size: 16px;
+  border: 2px solid #e5e5e5;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #214c9a;
+  box-shadow: 0 0 0 3px rgba(33, 76, 154, 0.1);
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.checkButton {
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #214c9a;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.checkButton:hover {
+  background: #1a3d7a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(33, 76, 154, 0.3);
+}
+
+.checkButton:active {
+  transform: translateY(0);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 68px;
+  margin-top: 8px;
+  background: #ffffff;
+  border: 2px solid #e5e5e5;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.dropdownItem {
+  padding: 12px 20px;
+  font-size: 16px;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItem:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdownItem:active {
+  background-color: #e9ecef;
+}
+
+.mapContainer {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.mapLoading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 16px;
+}
+
+/* Модальное окно */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: overlayAppear 0.2s ease-out;
+}
+
+@keyframes overlayAppear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 540px;
+  width: 100%;
+  position: relative;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: modalAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.modalContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #214c9a 0%, #08a146 100%);
+  z-index: 1;
+}
+
+.modalContentSuccess::before {
+  background: linear-gradient(90deg, #08a146 0%, #06d85f 100%);
+}
+
+.modalContentWarning::before {
+  background: linear-gradient(90deg, #f4940a 0%, #ffb84d 100%);
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modalClose {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.2s ease;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  z-index: 10;
+}
+
+.modalClose:hover {
+  color: #1a1a1a;
+  background: #e5e5e5;
+  transform: rotate(90deg);
+}
+
+.modalIconContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  margin-top: 8px;
+}
+
+.modalIconSuccess {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #08a146 0%, #06d85f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(8, 161, 70, 0.3);
+  animation: iconBounce 0.5s ease-out;
+}
+
+.modalIconWarning {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f4940a 0%, #ffb84d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(244, 148, 10, 0.3);
+  animation: iconBounce 0.5s ease-out;
+}
+
+@keyframes iconBounce {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modalTitle {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 24px 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.modalTitleSuccess {
+  color: #08a146;
+}
+
+.modalTitleWarning {
+  color: #f4940a;
+}
+
+.modalAddress {
+  font-size: 16px;
+  font-weight: 500;
+  color: #214c9a;
+  margin-bottom: 28px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.addressIcon {
+  color: #214c9a;
+  flex-shrink: 0;
+}
+
+.modalAddress span {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.modalText {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+  margin: 0 0 36px 0;
+  text-align: center;
+}
+
+.modalButton {
+  width: 100%;
+  padding: 18px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modalButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.modalButton:hover::before {
+  left: 100%;
+}
+
+.modalButtonSuccess {
+  background: linear-gradient(135deg, #08a146 0%, #06d85f 100%);
+  box-shadow: 0 4px 16px rgba(8, 161, 70, 0.3);
+}
+
+.modalButtonSuccess:hover {
+  background: linear-gradient(135deg, #06963d 0%, #05c752 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(8, 161, 70, 0.4);
+}
+
+.modalButtonWarning {
+  background: linear-gradient(135deg, #214c9a 0%, #3a6bc7 100%);
+  box-shadow: 0 4px 16px rgba(33, 76, 154, 0.3);
+}
+
+.modalButtonWarning:hover {
+  background: linear-gradient(135deg, #1a3d7a 0%, #2d5bb0 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33, 76, 154, 0.4);
+}
+
+.modalButton:active {
+  transform: translateY(0);
+}
+
+.modalButton svg {
+  transition: transform 0.3s ease;
+}
+
+.modalButton:hover svg {
+  transform: translateX(4px);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .addressCheckBlock {
+    padding: 60px 0;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .contentCard {
+    padding: 24px 24px;
+  }
+
+  .title {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
+  .inputGroup {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .dropdown {
+    right: 0;
+  }
+
+  .checkButton {
+    width: 100%;
+  }
+
+  .mapContainer {
+    height: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .addressCheckBlock {
+    padding: 60px 0;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .contentCard {
+    padding: 20px 20px;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .input {
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+
+  .checkButton {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  .mapContainer {
+    height: 350px;
+  }
+
+  .modalContent {
+    padding: 40px 24px;
+    border-radius: 16px;
+  }
+
+  .modalIconContainer {
+    margin-bottom: 20px;
+    margin-top: 4px;
+  }
+
+  .modalIconSuccess,
+  .modalIconWarning {
+    width: 64px;
+    height: 64px;
+  }
+
+  .modalIconSuccess svg,
+  .modalIconWarning svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .modalTitle {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .modalAddress {
+    font-size: 15px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    gap: 10px;
+  }
+
+  .addressIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .modalText {
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .modalButton {
+    padding: 16px 24px;
+    font-size: 15px;
+  }
+}
+

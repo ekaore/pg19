@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import styles from './Header.module.css'
 
 export default function Header() {
@@ -19,14 +18,11 @@ export default function Header() {
         {/* Логотип слева */}
         <div className={styles.logo}>
           <Link href="/">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/logo.png"
               alt="ПЖ19"
-              width={120}
-              height={40}
               className={styles.logoImage}
-              priority
-              style={{ height: 'auto', width: 'auto' }}
             />
           </Link>
         </div>
