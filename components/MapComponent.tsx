@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 
 interface MapComponentProps {
   center: [number, number]
+  onMarkerDrag?: (coordinates: [number, number]) => void
+  onMarkerClick?: () => void
 }
 
 declare global {
@@ -14,11 +16,22 @@ declare global {
   }
 }
 
-export default function MapComponent({ center }: MapComponentProps) {
+export default function MapComponent({ center, onMarkerDrag, onMarkerClick }: MapComponentProps) {
   const mapRef = useRef<HTMLDivElement>(null)
   const mapInstanceRef = useRef<any>(null)
   const placemarkRef = useRef<any>(null)
   const [isLoaded, setIsLoaded] = useState(false)
+  const onMarkerDragRef = useRef(onMarkerDrag)
+  const onMarkerClickRef = useRef(onMarkerClick)
+  
+  // Обновляем ref при изменении callback
+  useEffect(() => {
+    onMarkerDragRef.current = onMarkerDrag
+  }, [onMarkerDrag])
+
+  useEffect(() => {
+    onMarkerClickRef.current = onMarkerClick
+  }, [onMarkerClick])
 
   useEffect(() => {
     let isMounted = true
@@ -33,10 +46,37 @@ export default function MapComponent({ center }: MapComponentProps) {
           controls: ['zoomControl', 'fullscreenControl']
         })
 
-        // Добавляем маркер
+        // Добавляем маркер с возможностью перетаскивания
         placemarkRef.current = new window.ymaps.Placemark(center, {}, {
-          preset: 'islands#blueDotIcon'
+          preset: 'islands#blueDotIcon',
+          draggable: true
         })
+        
+        // Обрабатываем событие окончания перетаскивания
+        placemarkRef.current.events.add('dragend', () => {
+          const coords = placemarkRef.current.geometry.getCoordinates()
+          const newCoords: [number, number] = [coords[0], coords[1]]
+          
+          // Обновляем центр карты
+          if (mapInstanceRef.current) {
+            mapInstanceRef.current.setCenter(newCoords, mapInstanceRef.current.getZoom(), {
+              duration: 300
+            })
+          }
+          
+          // Вызываем callback для обновления координат в родительском компоненте
+          if (onMarkerDragRef.current) {
+            onMarkerDragRef.current(newCoords)
+          }
+        })
+        
+        // Обрабатываем клик по маркеру
+        placemarkRef.current.events.add('click', () => {
+          if (onMarkerClickRef.current) {
+            onMarkerClickRef.current()
+          }
+        })
+        
         mapInstanceRef.current.geoObjects.add(placemarkRef.current)
         setIsLoaded(true)
       } catch (error) {

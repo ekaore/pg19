@@ -1,0 +1,293 @@
+.contactBlock {
+  padding: 0px 20px;
+  background: #ffffff;
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #4a4a4a;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.contactsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.contactCard {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e5e5e5;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  height: 100%;
+  min-height: 120px;
+}
+
+.contactCard:hover {
+  border-color: #214c9a;
+  box-shadow: 0 4px 16px rgba(33, 76, 154, 0.1);
+  transform: translateY(-4px);
+}
+
+.contactIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1.5px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.contactCard:hover .contactIcon {
+  transform: scale(1.05);
+}
+
+.contactIconInner {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.contactIconInner svg {
+  width: 16px;
+  height: 16px;
+}
+
+.contactContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.contactTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.contactValue {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+  word-break: break-word;
+}
+
+.contactValue:hover {
+  opacity: 0.8;
+}
+
+.contactSubValue {
+  font-size: 14px;
+  color: #666;
+  margin: 8px 0 0 0;
+  line-height: 1.5;
+}
+
+.locationsSection {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.locationsTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  margin: 0;
+  line-height: 1.3;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.locationsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  position: relative;
+}
+
+.locationItem {
+  display: inline-block;
+  padding: 8px 20px;
+  font-size: 16px;
+  color: #1a1a1a;
+  font-weight: 400;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.locationItem:not(:last-child)::after {
+  content: '•';
+  position: absolute;
+  right: 0;
+  color: #ccc;
+  font-weight: 300;
+}
+
+.locationItem:hover {
+  color: #214c9a;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .contactsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contactBlock {
+    padding: 80px 20px;
+  }
+
+  .title {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .header {
+    margin-bottom: 48px;
+  }
+
+  .contactsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .contactCard {
+    padding: 20px;
+  }
+
+  .contactIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .contactIconInner {
+    width: 16px;
+    height: 16px;
+  }
+
+  .contactIconInner svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .contactTitle {
+    font-size: 15px;
+  }
+
+  .contactValue {
+    font-size: 15px;
+  }
+
+  .contactSubValue {
+    font-size: 13px;
+  }
+
+  .locationsSection {
+    margin-top: 48px;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .locationsTitle {
+    font-size: 16px;
+  }
+
+  .locationItem {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+
+  .locationItem:not(:last-child)::after {
+    right: -2px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contactBlock {
+    padding: 60px 16px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .header {
+    margin-bottom: 40px;
+  }
+
+  .contactsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .contactCard {
+    padding: 20px;
+  }
+
+  .locationsSection {
+    margin-top: 40px;
+    gap: 12px;
+  }
+
+  .locationsTitle {
+    font-size: 15px;
+  }
+
+  .locationItem {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}
+

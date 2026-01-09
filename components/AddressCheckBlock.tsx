@@ -18,6 +18,22 @@ const ADDRESSES = [
   'Таганрог, ул. Ленина, д. 25'
 ]
 
+const MAP_ADDRESSES = [
+  'Таганрог, ул. Александровская, д. 12',
+  'Таганрог, ул. Айвазовского, д. 7',
+  'Таганрог, ул. Лизы Волошиной, д. 15',
+  'Таганрог, ул. Мариупольское шоссе, д. 50',
+  'Таганрог, ул. Транспортная, д. 22',
+  'Таганрог, ул. Восточная, д. 19',
+  'Таганрог, ул. Театральная, д. 8',
+  'Таганрог, ул. Инструментальная, д. 11',
+  'Таганрог, ул. Бакинская, д. 5',
+  'Таганрог, ул. Виноградная, д. 3',
+  'Таганрог, ул. Вишневая, д. 6',
+  'Таганрог, ул. Водопроводная, д. 9',
+  'Таганрог, ул. Богдана Хмельницкого, д. 14'
+]
+
 export default function AddressCheckBlock() {
   const [address, setAddress] = useState('')
   const [filteredAddresses, setFilteredAddresses] = useState<string[]>([])
@@ -102,6 +118,17 @@ export default function AddressCheckBlock() {
     handleCloseModal()
   }
 
+  const handleMarkerClick = () => {
+    // Выбираем случайный адрес из списка
+    const randomAddress = MAP_ADDRESSES[Math.floor(Math.random() * MAP_ADDRESSES.length)]
+    setAddress(randomAddress)
+    
+    // Случайно выбираем доступность подключения
+    const available = Math.random() >= 0.5
+    setIsAvailable(available)
+    setShowModal(true)
+  }
+
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = 'hidden'
@@ -160,7 +187,13 @@ export default function AddressCheckBlock() {
             </div>
           </div>
           <div className={styles.mapContainer}>
-            <MapComponent center={mapCenter} />
+            <MapComponent 
+              center={mapCenter} 
+              onMarkerDrag={(coordinates) => {
+                setMapCenter(coordinates)
+              }}
+              onMarkerClick={handleMarkerClick}
+            />
           </div>
         </div>
       </div>

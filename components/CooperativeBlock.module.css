@@ -1,0 +1,283 @@
+.cooperativeBlock {
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 24px 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.highlight {
+  color: #214c9a;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #4a4a4a;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.missionSection {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  position: relative;
+  overflow: hidden;
+}
+
+.missionSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #214c9a;
+}
+
+.missionTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 24px 0;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.missionText {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+.missionText p {
+  margin: 0 0 20px 0;
+}
+
+.missionText p:last-child {
+  margin-bottom: 0;
+}
+
+.missionText strong {
+  color: #214c9a;
+  font-weight: 700;
+}
+
+.goalsSection {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  position: relative;
+  overflow: hidden;
+}
+
+.goalsSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #214c9a;
+}
+
+.goalsTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 32px 0;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.goalsList {
+  display: grid;
+  gap: 16px;
+}
+
+.goalItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #214c9a;
+  transition: all 0.3s ease;
+}
+
+.goalItem {
+  border-left-color: #214c9a;
+}
+
+.goalItem:hover {
+  background: #f0f2f5;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(33, 76, 154, 0.1);
+}
+
+.goalNumber {
+  width: 36px;
+  height: 36px;
+  background: #214c9a;
+  color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(33, 76, 154, 0.3);
+}
+
+.goalText {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4a4a4a;
+  flex: 1;
+  padding-top: 2px;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .missionSection,
+  .goalsSection {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cooperativeBlock {
+    padding: 80px 20px;
+  }
+
+  .header {
+    margin-bottom: 48px;
+  }
+
+  .title {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  .content {
+    gap: 32px;
+  }
+
+  .missionSection,
+  .goalsSection {
+    padding: 32px 24px;
+    border-radius: 16px;
+  }
+
+  .missionTitle,
+  .goalsTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .missionText {
+    font-size: 15px;
+  }
+
+  .goalsHeader {
+    margin-bottom: 24px;
+  }
+
+  .goalItem {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .goalText {
+    font-size: 14px;
+  }
+
+  .goalNumber {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .cooperativeBlock {
+    padding: 60px 16px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .missionSection,
+  .goalsSection {
+    padding: 32px 24px;
+  }
+
+  .missionTitle,
+  .goalsTitle {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .goalItem {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .goalNumber {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .goalText {
+    font-size: 15px;
+    padding-top: 0;
+  }
+}
+
