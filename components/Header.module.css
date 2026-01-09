@@ -1,0 +1,215 @@
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  position: relative;
+}
+
+.logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -100px;
+}
+
+.logoImage {
+  height: auto;
+  width: auto;
+  max-height: 40px;
+  max-width: 160px;
+  object-fit: contain;
+  display: block;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navList {
+  display: flex;
+  list-style: none;
+  gap: 50px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navItem {
+  margin: 0;
+}
+
+.navLink {
+  color: #333333;
+  font-size: 18px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  position: relative;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLink:hover {
+  color: #214c9a;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #214c9a;
+  transition: width 0.3s ease;
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.rightSection {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-right: -100px;
+}
+
+.phone {
+  color: #333333;
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.phone:hover {
+  color: #214c9a;
+}
+
+.cabinetButton {
+  background-color: #214c9a;
+  color: #ffffff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  border: none;
+  box-shadow: 
+    0 4px 6px rgba(33, 76, 154, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cabinetIcon {
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+
+.cabinetButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.cabinetButton:hover {
+  background-color: #1a3d7a;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 16px rgba(33, 76, 154, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.cabinetButton:hover::before {
+  left: 100%;
+}
+
+.cabinetButton:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 4px rgba(33, 76, 154, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 968px) {
+  .container {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 16px 20px;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .navList {
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .rightSection {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .navList {
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .phone {
+    font-size: 16px;
+  }
+
+  .cabinetButton {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .logoImage {
+    max-height: 32px;
+  }
+}
+

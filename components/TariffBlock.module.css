@@ -1,0 +1,430 @@
+.tariffBlock {
+  padding: 0px 20px 40px 20px;
+  margin-top: -110px;
+  position: relative;
+  z-index: 2;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tariffCard {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 10px 30px rgba(33, 76, 154, 0.2),
+    0 5px 15px rgba(231, 20, 97, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tariffCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, 
+    #e71461 0%, 
+    #f4940a 25%, 
+    #214c9a 50%, 
+    #08a146 75%, 
+    #e71461 100%
+  );
+  background-size: 200% 100%;
+  animation: gradientMove 4s linear infinite;
+  z-index: 1;
+}
+
+.tariffCard::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(33, 76, 154, 0.05) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.leftSection {
+  padding: 40px;
+  background: linear-gradient(135deg, #214c9a 0%, #162b4d 50%, #214c9a 100%);
+  background-size: 200% 200%;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 360px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.leftSection::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.priceSection {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.priceLabel {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+}
+
+.priceValue {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.priceCurrency {
+  font-size: 24px;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  transition: background 0.3s ease;
+}
+
+.feature:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.featureIcon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.featureContent {
+  flex: 1;
+}
+
+.featureValue {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.featureLabel {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.divider {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, #e5e5e5, transparent);
+  flex-shrink: 0;
+}
+
+.rightSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.detailsSection {
+  padding: 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailsTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333333;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.detailsList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detailItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 16px;
+  color: #333333;
+  line-height: 1.6;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+}
+
+.detailItem:hover {
+  color: #214c9a;
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  color: #08a146;
+  margin-top: 2px;
+  width: 24px;
+  height: 24px;
+  background: rgba(8, 161, 70, 0.1);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.description {
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.7;
+  margin-bottom: 12px;
+  flex: 1;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 3px solid #214c9a;
+}
+
+.footnote {
+  font-size: 13px;
+  color: #999999;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.connectButton {
+  background-color: #ffffff;
+  color: #214c9a;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.connectButton:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #1a3d7a;
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.connectButton:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Адаптивность */
+@media (max-width: 968px) {
+  .tariffCard {
+    flex-direction: column;
+  }
+
+  .leftSection {
+    min-width: auto;
+    padding: 32px 24px;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e5e5e5, transparent);
+  }
+
+  .priceValue {
+    font-size: 56px;
+  }
+
+  .feature {
+    padding: 14px;
+  }
+
+  .featureIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .featureIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tariffBlock {
+    padding: 0px 16px 80px 16px;
+    margin-top: -90px;
+  }
+  
+  .tariffCard {
+    border-radius: 20px;
+  }
+  
+  .tariffCard::before {
+    height: 4px;
+  }
+
+  .leftSection {
+    padding: 32px 24px 24px;
+  }
+
+  .priceValue {
+    font-size: 48px;
+  }
+
+  .priceCurrency {
+    font-size: 20px;
+  }
+
+  .detailsSection {
+    padding: 32px 24px;
+  }
+
+  .detailsTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .connectButton {
+    padding: 14px 24px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tariffBlock {
+    margin-top: -50px;
+  }
+
+  .priceValue {
+    font-size: 40px;
+  }
+
+  .feature {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .featureIcon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+  }
+
+  .featureValue {
+    font-size: 18px;
+  }
+
+  .detailsSection {
+    padding: 24px 20px;
+  }
+
+  .detailItem {
+    font-size: 15px;
+  }
+
+  .connectButton {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+}
+
