@@ -12,7 +12,7 @@ export default function CooperativeBlock() {
   ]
 
   return (
-    <section className={styles.cooperativeBlock}>
+    <section id="cooperative" className={styles.cooperativeBlock}>
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import styles from './AddressCheckBlock.module.css'
 
@@ -35,6 +36,7 @@ const MAP_ADDRESSES = [
 ]
 
 export default function AddressCheckBlock() {
+  const router = useRouter()
   const [address, setAddress] = useState('')
   const [filteredAddresses, setFilteredAddresses] = useState<string[]>([])
   const [showDropdown, setShowDropdown] = useState(false)
@@ -113,9 +115,12 @@ export default function AddressCheckBlock() {
   }
 
   const handleSubmitRequest = () => {
-    // Здесь можно добавить логику отправки заявки
-    console.log('Заявка оставлена для адреса:', address)
-    handleCloseModal()
+    // Переход на страницу заявки с параметрами
+    const params = new URLSearchParams({
+      address: address,
+      available: isAvailable.toString()
+    })
+    router.push(`/request?${params.toString()}`)
   }
 
   const handleMarkerClick = () => {
@@ -142,7 +147,7 @@ export default function AddressCheckBlock() {
   }, [showModal])
 
   return (
-    <section className={styles.addressCheckBlock}>
+    <section id="address-check" className={styles.addressCheckBlock}>
       <div className={styles.container}>
         <div className={styles.contentCard}>
           <h2 className={styles.title}>Проверьте возможность подключения по вашему адресу</h2>

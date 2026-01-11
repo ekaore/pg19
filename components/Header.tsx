@@ -1,16 +1,38 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import styles from './Header.module.css'
 
 export default function Header() {
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
+
   const navItems = [
-    { label: 'Тарифы', href: '#tariff' },
-    { label: 'Услуги', href: '/services' },
-    { label: 'Подключение', href: '/connection' },
-    { label: 'О кооперативе', href: '/about' },
-    { label: 'Контакты', href: '/contacts' },
+    { label: 'Тариф', href: '#tariff', id: 'tariff' },
+    { label: 'Услуги', href: '#services', id: 'services' },
+    { label: 'Подключение', href: '#address-check', id: 'address-check' },
+    { label: 'О кооперативе', href: '#cooperative', id: 'cooperative' },
+    { label: 'Контакты', href: '#contacts', id: 'contacts' },
   ]
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, id: string) => {
+    // Если мы не на главной странице, сначала переходим на главную
+    if (!isHomePage && href.startsWith('#')) {
+      e.preventDefault()
+      window.location.href = `/${href}`
+      return
+    }
+
+    // Если на главной странице, плавно прокручиваем к блоку
+    if (isHomePage && href.startsWith('#')) {
+      e.preventDefault()
+      const element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+  }
 
   return (
     <header className={styles.header}>
@@ -32,7 +54,11 @@ export default function Header() {
           <ul className={styles.navList}>
             {navItems.map((item) => (
               <li key={item.href} className={styles.navItem}>
-                <Link href={item.href} className={styles.navLink}>
+                <Link 
+                  href={item.href} 
+                  className={styles.navLink}
+                  onClick={(e) => handleNavClick(e, item.href, item.id)}
+                >
                   {item.label}
                 </Link>
               </li>
@@ -47,7 +73,6 @@ export default function Header() {
           </a>
           <Link href="/cabinet" className={styles.cabinetButton}>
             <svg
-              className={styles.cabinetIcon}
               width="16"
               height="16"
               viewBox="0 0 24 24"

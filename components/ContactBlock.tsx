@@ -59,7 +59,7 @@ export default function ContactBlock() {
   ]
 
   return (
-    <section className={styles.contactBlock}>
+    <section id="contacts" className={styles.contactBlock}>
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>Свяжитесь с нами</h2>

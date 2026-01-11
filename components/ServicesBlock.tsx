@@ -56,7 +56,7 @@ export default function ServicesBlock() {
   ]
 
   return (
-    <section className={styles.servicesBlock}>
+    <section id="services" className={styles.servicesBlock}>
       <div className={styles.container}>
         <h2 className={styles.title}>Добавьте к интернету больше возможностей</h2>
         <div className={styles.servicesGrid}>

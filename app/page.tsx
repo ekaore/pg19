@@ -6,6 +6,7 @@ import CooperativeBlock from '@/components/CooperativeBlock'
 import DifferencesBlock from '@/components/DifferencesBlock'
 import ContactBlock from '@/components/ContactBlock'
 import Footer from '@/components/Footer'
+import ScrollToTop from '@/components/ScrollToTop'
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <ContactBlock />
       </main>
       <Footer />
+      <ScrollToTop />
     </>
   )
 }
