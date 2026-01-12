@@ -1,5 +1,5 @@
 .contactBlock {
-  padding: 0px 20px;
+  padding: 30px 20px;
   background: #ffffff;
   position: relative;
 }
@@ -181,7 +181,7 @@
 
 @media (max-width: 768px) {
   .contactBlock {
-    padding: 80px 20px;
+    padding: 30px 20px;
   }
 
   .title {
@@ -256,7 +256,7 @@
 
 @media (max-width: 640px) {
   .contactBlock {
-    padding: 60px 16px;
+    padding: 30px 16px;
   }
 
   .title {
@@ -293,7 +293,7 @@
 
 @media (max-width: 480px) {
   .contactBlock {
-    padding: 50px 12px;
+    padding: 30px 12px;
   }
 
   .title {

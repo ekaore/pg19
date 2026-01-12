@@ -1,6 +1,6 @@
 .hero {
   background: linear-gradient(135deg, #214c9a 0%, #162b4d 50%, #214c9a 100%);
-  padding: 50px 20px 120px 20px;
+  padding: 50px 20px 30px 20px;
   position: relative;
   overflow: visible;
 }
@@ -162,7 +162,7 @@
   }
   
   .subtitle {
-    margin-bottom: 30px;
+    margin-bottom: 0;
   }
 }
 

@@ -1,7 +1,7 @@
 .footer {
   background: linear-gradient(135deg, #214c9a 0%, #162b4d 50%, #214c9a 100%);
   color: #ffffff;
-  padding: 50px 20px 35px;
+  padding: 30px 20px 35px;
   margin-top: auto;
   position: relative;
   overflow: hidden;
@@ -221,7 +221,7 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 40px 20px 30px;
+    padding: 30px 20px 30px;
   }
 
   .footerGrid {
@@ -285,7 +285,7 @@
 
 @media (max-width: 640px) {
   .footer {
-    padding: 35px 16px 24px;
+    padding: 30px 16px 24px;
   }
 
   .footerGrid {

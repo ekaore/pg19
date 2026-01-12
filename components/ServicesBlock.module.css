@@ -1,5 +1,5 @@
 .servicesBlock {
-  padding: 80px 20px;
+  padding: 30px 20px;
 }
 
 .container {
@@ -148,7 +148,7 @@
 
 @media (max-width: 768px) {
   .servicesBlock {
-    padding: 60px 20px;
+    padding: 30px 20px;
   }
 
   .title {
@@ -168,7 +168,7 @@
 
 @media (max-width: 640px) {
   .servicesBlock {
-    padding: 60px 16px;
+    padding: 30px 16px;
   }
 
   .title {
@@ -208,7 +208,7 @@
 
 @media (max-width: 480px) {
   .servicesBlock {
-    padding: 50px 12px;
+    padding: 30px 12px;
   }
 
   .title {

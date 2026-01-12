@@ -21,6 +21,7 @@ export default function CabinetPage() {
   const [showModal, setShowModal] = useState(false)
   const [modalType, setModalType] = useState<'success' | 'error' | null>(null)
   const [errorMessage, setErrorMessage] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   const formatPhone = (value: string): string => {
     const numbers = value.replace(/\D/g, '')
@@ -119,6 +120,14 @@ export default function CabinetPage() {
     setShowModal(false)
     setModalType(null)
     setErrorMessage('')
+    // Очищаем поля при закрытии модального окна после успешного входа
+    if (modalType === 'success') {
+      setPhone('')
+      setContractNumber('')
+      setPassword('')
+      setEmail('')
+      setShowPassword(false)
+    }
   }
 
   // Блокируем скролл при открытом модальном окне
@@ -135,8 +144,68 @@ export default function CabinetPage() {
   }, [showModal])
 
   const handleLogin = () => {
-    console.log('Вход:', { loginMethod, phone, contractNumber, password, email })
-    // Здесь будет логика входа
+    if (loginMethod === 'contract') {
+      if (!contractNumber.trim()) {
+        setErrorMessage('Введите номер договора')
+        setModalType('error')
+        setShowModal(true)
+        return
+      }
+
+      if (!password.trim()) {
+        setErrorMessage('Введите пароль')
+        setModalType('error')
+        setShowModal(true)
+        return
+      }
+
+      // Проверка номера договора и пароля
+      // Для примера: договор "123456" с паролем "password"
+      const validContracts: { [key: string]: string } = {
+        '123456': 'password',
+        '111111': 'pass123',
+        '222222': 'pass456'
+      }
+
+      if (validContracts[contractNumber] && validContracts[contractNumber] === password) {
+        setModalType('success')
+        setShowModal(true)
+      } else {
+        setErrorMessage('Неверный номер договора или пароль')
+        setModalType('error')
+        setShowModal(true)
+      }
+    } else if (loginMethod === 'email') {
+      if (!email.trim()) {
+        setErrorMessage('Введите email')
+        setModalType('error')
+        setShowModal(true)
+        return
+      }
+
+      if (!password.trim()) {
+        setErrorMessage('Введите пароль')
+        setModalType('error')
+        setShowModal(true)
+        return
+      }
+
+      // Проверка email и пароля
+      const validEmails: { [key: string]: string } = {
+        'test@example.com': 'password',
+        'admin@pg19.ru': 'admin123',
+        'user@pg19.ru': 'user123'
+      }
+
+      if (validEmails[email.toLowerCase()] && validEmails[email.toLowerCase()] === password) {
+        setModalType('success')
+        setShowModal(true)
+      } else {
+        setErrorMessage('Неверный email или пароль')
+        setModalType('error')
+        setShowModal(true)
+      }
+    }
   }
 
   const handleTelegramLogin = () => {
@@ -215,19 +284,20 @@ export default function CabinetPage() {
           
           <div className={styles.methodsList}>
             {loginMethods.map((method) => (
-              <button
+            <button
                 key={method.id}
                 className={`${styles.methodTab} ${loginMethod === method.id ? styles.methodTabActive : ''}`}
                 onClick={() => setLoginMethod(method.id)}
-              >
-                <div className={styles.methodIcon}>
+                title={`${method.title} - ${method.description}`}
+            >
+              <div className={styles.methodIcon}>
                   {method.icon}
-                </div>
-                <div className={styles.methodContent}>
+              </div>
+              <div className={styles.methodContent}>
                   <div className={styles.methodName}>{method.title}</div>
                   <div className={styles.methodDescription}>{method.description}</div>
-                </div>
-              </button>
+              </div>
+            </button>
             ))}
           </div>
         </div>
@@ -328,14 +398,34 @@ export default function CabinetPage() {
 
               <div className={styles.formGroup}>
                 <label htmlFor="contractPassword" className={styles.label}>Пароль</label>
+                <div className={styles.passwordInputWrapper}>
                 <input
-                  type="password"
+                    type={showPassword ? 'text' : 'password'}
                   id="contractPassword"
                   className={styles.input}
                   placeholder="Введите пароль"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                  <button
+                    type="button"
+                    className={styles.passwordToggle}
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                  >
+                    {showPassword ? (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.68192 3.96914 7.65663 6.06 6.06M9.9 4.24C10.5883 4.0789 11.2931 3.99836 12 4C19 4 23 12 23 12C22.393 13.1356 21.6691 14.2047 20.84 15.19M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1751 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29439 13.5719 9.14351 13.1984C8.99262 12.8249 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2218 9.18488 10.8538C9.34884 10.4859 9.58525 10.1546 9.88 9.88" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 1L23 23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <button className={styles.submitButton} onClick={handleLogin}>
@@ -377,14 +467,34 @@ export default function CabinetPage() {
 
               <div className={styles.formGroup}>
                 <label htmlFor="emailPassword" className={styles.label}>Пароль</label>
+                <div className={styles.passwordInputWrapper}>
                 <input
-                  type="password"
+                    type={showPassword ? 'text' : 'password'}
                   id="emailPassword"
                   className={styles.input}
                   placeholder="Введите пароль"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                  <button
+                    type="button"
+                    className={styles.passwordToggle}
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                  >
+                    {showPassword ? (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.68192 3.96914 7.65663 6.06 6.06M9.9 4.24C10.5883 4.0789 11.2931 3.99836 12 4C19 4 23 12 23 12C22.393 13.1356 21.6691 14.2047 20.84 15.19M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1751 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29439 13.5719 9.14351 13.1984C8.99262 12.8249 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2218 9.18488 10.8538C9.34884 10.4859 9.58525 10.1546 9.88 9.88" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 1L23 23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <button className={styles.submitButton} onClick={handleLogin}>

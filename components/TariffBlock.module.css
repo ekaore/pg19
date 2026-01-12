@@ -1,6 +1,6 @@
 .tariffBlock {
-  padding: 0px 20px 60px 20px;
-  margin-top: -110px;
+  padding: 0px 20px 30px 20px;
+  margin-top: -75px;
   position: relative;
   z-index: 2;
 }
@@ -350,7 +350,7 @@
 
 @media (max-width: 768px) {
   .tariffBlock {
-    padding: 0px 16px 80px 16px;
+    padding: 0px 16px 30px 16px;
     margin-top: -90px;
   }
   
@@ -392,7 +392,7 @@
 @media (max-width: 480px) {
   .tariffBlock {
     margin-top: -50px;
-    padding: 0px 12px 60px 12px;
+    padding: 0px 12px 30px 12px;
   }
 
   .tariffCard {
