@@ -1,3 +1,7 @@
+.servicesBlock {
+  padding: 80px 20px;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -199,6 +203,50 @@
   .serviceIconInner {
     width: 20px;
     height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .servicesBlock {
+    padding: 50px 12px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+
+  .serviceCard {
+    padding: 20px 16px;
+  }
+
+  .serviceHeader {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .serviceIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .serviceIconInner {
+    width: 18px;
+    height: 18px;
+  }
+
+  .serviceTitle {
+    font-size: 16px;
+  }
+
+  .serviceFeature {
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  .detailsButton {
+    padding: 10px 16px;
+    font-size: 14px;
   }
 }
 

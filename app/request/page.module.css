@@ -473,8 +473,13 @@
 }
 
 @media (max-width: 768px) {
+  .modalOverlay {
+    padding: 16px;
+  }
+
   .modalContent {
     padding: 40px 24px;
+    max-width: 100%;
   }
 
   .modalTitle {
@@ -493,6 +498,84 @@
   .modalIconSuccess svg {
     width: 36px;
     height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 30px 12px;
+  }
+
+  .contentCard {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .mainTitle {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .form {
+    gap: 16px;
+  }
+
+  .input,
+  .textarea {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .submitButton {
+    padding: 16px 20px;
+    font-size: 14px;
+  }
+
+  .modalOverlay {
+    padding: 12px;
+  }
+
+  .modalContent {
+    padding: 32px 20px;
+    border-radius: 12px;
+  }
+
+  .modalClose {
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+  }
+
+  .modalIconSuccess {
+    width: 56px;
+    height: 56px;
+  }
+
+  .modalIconSuccess svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .modalTitle {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .modalText {
+    font-size: 14px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .modalButton {
+    padding: 14px 20px;
+    font-size: 14px;
   }
 }
 

@@ -291,3 +291,68 @@
   }
 }
 
+@media (max-width: 480px) {
+  .contactBlock {
+    padding: 50px 12px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .header {
+    margin-bottom: 32px;
+  }
+
+  .contactCard {
+    padding: 16px;
+    min-height: 100px;
+  }
+
+  .contactIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .contactIconInner {
+    width: 14px;
+    height: 14px;
+  }
+
+  .contactIconInner svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .contactTitle {
+    font-size: 14px;
+  }
+
+  .contactValue {
+    font-size: 14px;
+  }
+
+  .contactSubValue {
+    font-size: 12px;
+  }
+
+  .locationsSection {
+    margin-top: 32px;
+    gap: 10px;
+  }
+
+  .locationsTitle {
+    font-size: 14px;
+  }
+
+  .locationItem {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
+

@@ -392,39 +392,80 @@
 @media (max-width: 480px) {
   .tariffBlock {
     margin-top: -50px;
+    padding: 0px 12px 60px 12px;
+  }
+
+  .tariffCard {
+    border-radius: 16px;
+  }
+
+  .leftSection {
+    padding: 24px 20px;
   }
 
   .priceValue {
-    font-size: 40px;
+    font-size: 36px;
+  }
+
+  .priceCurrency {
+    font-size: 18px;
   }
 
   .feature {
     flex-direction: column;
     text-align: center;
     gap: 12px;
+    padding: 12px;
   }
 
   .featureIcon {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     margin: 0 auto;
   }
 
+  .featureIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .featureValue {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .featureLabel {
+    font-size: 13px;
   }
 
   .detailsSection {
     padding: 24px 20px;
   }
 
+  .detailsTitle {
+    font-size: 18px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
   .detailItem {
-    font-size: 15px;
+    font-size: 14px;
+    gap: 10px;
+    padding: 12px 0;
+  }
+
+  .checkIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .description {
+    font-size: 14px;
+    padding: 12px;
   }
 
   .connectButton {
-    padding: 14px 32px;
-    font-size: 16px;
+    padding: 14px 24px;
+    font-size: 15px;
   }
 }
 

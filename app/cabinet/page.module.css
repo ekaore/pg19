@@ -17,69 +17,65 @@
   border-radius: 24px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    #e71461 0%, 
+    #f4940a 25%, 
+    #214c9a 50%, 
+    #08a146 75%, 
+    #e71461 100%
+  );
+  background-size: 200% 100%;
+  animation: gradientMove 4s linear infinite;
+  z-index: 1;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 
 /* Левая панель */
 .sidebar {
-  background: #ffffff;
-  padding: 48px 32px;
+  background: #f0f4f8;
+  padding: 40px 32px;
   border-right: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 48px;
+  display: inline-block;
+  margin-bottom: 40px;
   text-decoration: none;
   color: inherit;
+  transition: transform 0.2s ease;
 }
 
-.logoIcon {
-  width: 48px;
-  height: 48px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.logo:hover {
+  transform: scale(1.05);
 }
 
-.logoColor1 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #e71461 0%, #f4940a 100%);
-  border-radius: 12px;
-  opacity: 0.9;
-}
-
-.logoColor2 {
-  position: absolute;
-  width: 80%;
-  height: 80%;
-  background: linear-gradient(135deg, #f4940a 0%, #08a146 100%);
-  border-radius: 10px;
-  opacity: 0.8;
-  transform: rotate(15deg);
-}
-
-.logoColor3 {
-  position: absolute;
-  width: 60%;
-  height: 60%;
-  background: linear-gradient(135deg, #214c9a 0%, #08a146 100%);
-  border-radius: 8px;
-  opacity: 0.9;
-  transform: rotate(-15deg);
-}
-
-.logoText {
-  font-size: 28px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #e71461 0%, #f4940a 50%, #08a146 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.logoImage {
+  height: auto;
+  width: auto;
+  max-height: 50px;
+  max-width: 180px;
+  object-fit: contain;
+  display: block;
 }
 
 .sidebarTitle {
@@ -93,16 +89,18 @@
 .sidebarSubtitle {
   font-size: 16px;
   color: #666666;
-  margin: 0 0 32px 0;
+  margin: 0 0 40px 0;
+  line-height: 1.5;
 }
 
 .methodsList {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex: 1;
 }
 
-.methodItem {
+.methodTab {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -116,26 +114,26 @@
   width: 100%;
 }
 
-.methodItem:hover {
+.methodTab:hover {
   border-color: #214c9a;
   background: #f8f9fa;
 }
 
-.methodItemActive {
+.methodTabActive {
   background: linear-gradient(135deg, #214c9a 0%, #3a6bc7 100%);
   border-color: #214c9a;
   color: #ffffff;
 }
 
-.methodItemActive .methodIcon {
+.methodTabActive .methodIcon {
   color: #ffffff;
 }
 
-.methodItemActive .methodName {
+.methodTabActive .methodName {
   color: #ffffff;
 }
 
-.methodItemActive .methodDescription {
+.methodTabActive .methodDescription {
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -149,9 +147,10 @@
   flex-shrink: 0;
   background: rgba(33, 76, 154, 0.1);
   border-radius: 10px;
+  transition: all 0.2s ease;
 }
 
-.methodItemActive .methodIcon {
+.methodTabActive .methodIcon {
   background: rgba(255, 255, 255, 0.2);
 }
 
@@ -183,6 +182,18 @@
 .formContainer {
   width: 100%;
   max-width: 480px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .formTitle {
@@ -269,6 +280,10 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   margin-top: 8px;
 }
 
@@ -279,6 +294,231 @@
 }
 
 .telegramButton:active {
+  transform: translateY(0);
+}
+
+/* Модальное окно */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: overlayAppear 0.2s ease-out;
+}
+
+@keyframes overlayAppear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 540px;
+  width: 100%;
+  position: relative;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: modalAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.modalContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 1;
+}
+
+.modalSuccess::before {
+  background: linear-gradient(90deg, #08a146 0%, #06d85f 100%);
+}
+
+.modalError::before {
+  background: linear-gradient(90deg, #dc3545 0%, #ff6b6b 100%);
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modalClose {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.2s ease;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  z-index: 10;
+}
+
+.modalClose:hover {
+  color: #1a1a1a;
+  background: #e5e5e5;
+  transform: rotate(90deg);
+}
+
+.modalIconContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  margin-top: 8px;
+}
+
+.modalIconSuccess {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #08a146 0%, #06d85f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(8, 161, 70, 0.3);
+  animation: iconBounce 0.5s ease-out;
+}
+
+.modalIconError {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #dc3545 0%, #ff6b6b 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(220, 53, 69, 0.3);
+  animation: iconBounce 0.5s ease-out;
+}
+
+@keyframes iconBounce {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modalTitle {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 24px 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.modalSuccess .modalTitle {
+  color: #08a146;
+}
+
+.modalError .modalTitle {
+  color: #dc3545;
+}
+
+.modalText {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+  margin: 0 0 36px 0;
+  text-align: center;
+}
+
+.modalButton {
+  width: 100%;
+  padding: 18px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modalButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.modalButton:hover::before {
+  left: 100%;
+}
+
+.modalButtonSuccess {
+  background: linear-gradient(135deg, #08a146 0%, #06d85f 100%);
+  box-shadow: 0 4px 16px rgba(8, 161, 70, 0.3);
+}
+
+.modalButtonSuccess:hover {
+  background: linear-gradient(135deg, #06963d 0%, #05c752 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(8, 161, 70, 0.4);
+}
+
+.modalButtonError {
+  background: linear-gradient(135deg, #214c9a 0%, #3a6bc7 100%);
+  box-shadow: 0 4px 16px rgba(33, 76, 154, 0.3);
+}
+
+.modalButtonError:hover {
+  background: linear-gradient(135deg, #1a3d7a 0%, #2d5bb0 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33, 76, 154, 0.4);
+}
+
+.modalButton:active {
   transform: translateY(0);
 }
 
@@ -306,7 +546,7 @@
     padding-bottom: 8px;
   }
 
-  .methodItem {
+  .methodTab {
     min-width: 200px;
     flex-direction: column;
     text-align: center;
@@ -331,8 +571,23 @@
     padding: 24px 20px;
   }
 
+  .logo {
+    margin-bottom: 32px;
+  }
+
+  .logoImage {
+    max-height: 40px;
+    max-width: 140px;
+  }
+
   .sidebarTitle {
     font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .sidebarSubtitle {
+    font-size: 14px;
+    margin-bottom: 32px;
   }
 
   .formTitle {
@@ -347,9 +602,120 @@
     flex-direction: column;
   }
 
-  .methodItem {
+  .methodTab {
     min-width: auto;
     width: 100%;
   }
 }
 
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 12px;
+  }
+
+  .container {
+    border-radius: 12px;
+  }
+
+  .sidebar {
+    padding: 20px 16px;
+  }
+
+  .logo {
+    margin-bottom: 24px;
+  }
+
+  .logoImage {
+    max-height: 36px;
+    max-width: 120px;
+  }
+
+  .sidebarTitle {
+    font-size: 20px;
+  }
+
+  .sidebarSubtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .methodTab {
+    padding: 14px 16px;
+  }
+
+  .methodIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .methodName {
+    font-size: 16px;
+  }
+
+  .methodDescription {
+    font-size: 12px;
+  }
+
+  .content {
+    padding: 20px 16px;
+  }
+
+  .formTitle {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .formSubtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .input {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .submitButton,
+  .telegramButton {
+    padding: 16px 24px;
+    font-size: 15px;
+  }
+
+  .modalContent {
+    padding: 40px 24px;
+    border-radius: 16px;
+  }
+
+  .modalIconContainer {
+    margin-bottom: 20px;
+    margin-top: 4px;
+  }
+
+  .modalIconSuccess,
+  .modalIconError {
+    width: 64px;
+    height: 64px;
+  }
+
+  .modalIconSuccess svg,
+  .modalIconError svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .modalTitle {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .modalText {
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .modalButton {
+    padding: 16px 24px;
+    font-size: 15px;
+  }
+}

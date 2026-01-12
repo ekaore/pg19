@@ -197,3 +197,48 @@
   }
 }
 
+@media (max-width: 480px) {
+  .differencesBlock {
+    padding: 50px 12px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+
+  .comparison {
+    gap: 24px;
+  }
+
+  .column {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .columnTitle {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .list {
+    gap: 12px;
+  }
+
+  .listItem {
+    font-size: 13px;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+

@@ -2,11 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import styles from './Header.module.css'
 
 export default function Header() {
   const pathname = usePathname()
   const isHomePage = pathname === '/'
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navItems = [
     { label: 'Тариф', href: '#tariff', id: 'tariff' },
@@ -17,6 +19,9 @@ export default function Header() {
   ]
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, id: string) => {
+    // Закрываем мобильное меню при клике
+    setIsMobileMenuOpen(false)
+    
     // Если мы не на главной странице, сначала переходим на главную
     if (!isHomePage && href.startsWith('#')) {
       e.preventDefault()
@@ -34,12 +39,35 @@ export default function Header() {
     }
   }
 
+  // Закрываем мобильное меню при изменении размера окна
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Блокируем скролл при открытом мобильном меню
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         {/* Логотип слева */}
         <div className={styles.logo}>
-          <Link href="/">
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.png"
@@ -50,7 +78,7 @@ export default function Header() {
         </div>
 
         {/* Навигационное меню по центру */}
-        <nav className={styles.nav}>
+        <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.navOpen : ''}`}>
           <ul className={styles.navList}>
             {navItems.map((item) => (
               <li key={item.href} className={styles.navItem}>
@@ -94,9 +122,23 @@ export default function Header() {
                 strokeLinejoin="round"
               />
             </svg>
-            Личный кабинет
+            <span className={styles.cabinetButtonText}>Личный кабинет</span>
           </Link>
         </div>
+
+        {/* Кнопка мобильного меню */}
+        <button
+          className={styles.mobileMenuButton}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Меню"
+          aria-expanded={isMobileMenuOpen}
+        >
+          <span className={`${styles.hamburger} ${isMobileMenuOpen ? styles.hamburgerOpen : ''}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
       </div>
     </header>
   )

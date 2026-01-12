@@ -281,3 +281,58 @@
   }
 }
 
+@media (max-width: 480px) {
+  .cooperativeBlock {
+    padding: 50px 12px;
+  }
+
+  .header {
+    margin-bottom: 40px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .missionSection,
+  .goalsSection {
+    padding: 24px 20px;
+    border-radius: 12px;
+  }
+
+  .missionTitle,
+  .goalsTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .missionText {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .missionText p {
+    margin-bottom: 16px;
+  }
+
+  .goalItem {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .goalNumber {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .goalText {
+    font-size: 14px;
+  }
+}
+

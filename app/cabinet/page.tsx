@@ -1,10 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import styles from './page.module.css'
 
 type LoginMethod = 'phone' | 'contract' | 'telegram' | 'email'
+
+const ALLOWED_PHONES = [
+  '+79001111111',
+  '+79002222222',
+  '+79003333333'
+]
 
 export default function CabinetPage() {
   const [loginMethod, setLoginMethod] = useState<LoginMethod>('phone')
@@ -12,6 +18,9 @@ export default function CabinetPage() {
   const [contractNumber, setContractNumber] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [modalType, setModalType] = useState<'success' | 'error' | null>(null)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const formatPhone = (value: string): string => {
     const numbers = value.replace(/\D/g, '')
@@ -67,10 +76,63 @@ export default function CabinetPage() {
     }
   }
 
-  const handleGetCode = () => {
-    console.log('Получение кода для:', phone)
-    // Здесь будет логика получения SMS кода
+  const normalizePhone = (phoneValue: string): string => {
+    // Убираем все символы кроме цифр
+    const numbers = phoneValue.replace(/\D/g, '')
+    // Если начинается с 8, заменяем на 7
+    let phoneNumbers = numbers
+    if (phoneNumbers.startsWith('8')) {
+      phoneNumbers = '7' + phoneNumbers.slice(1)
+    }
+    // Если не начинается с 7, добавляем 7
+    if (phoneNumbers.length > 0 && !phoneNumbers.startsWith('7')) {
+      phoneNumbers = '7' + phoneNumbers
+    }
+    // Форматируем в формат +7XXXXXXXXXX
+    return phoneNumbers.length === 11 ? `+${phoneNumbers}` : phoneValue
   }
+
+  const handleGetCode = () => {
+    if (!phone.trim()) {
+      setErrorMessage('Введите номер телефона')
+      setModalType('error')
+      setShowModal(true)
+      return
+    }
+
+    const normalizedPhone = normalizePhone(phone)
+    
+    if (ALLOWED_PHONES.includes(normalizedPhone)) {
+      // Успешный вход
+      setModalType('success')
+      setShowModal(true)
+      // Здесь можно добавить логику перенаправления в личный кабинет
+    } else {
+      // Номер не разрешен
+      setErrorMessage('Данный номер телефона не зарегистрирован в системе')
+      setModalType('error')
+      setShowModal(true)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    setModalType(null)
+    setErrorMessage('')
+  }
+
+  // Блокируем скролл при открытом модальном окне
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [showModal])
 
   const handleLogin = () => {
     console.log('Вход:', { loginMethod, phone, contractNumber, password, email })
@@ -82,97 +144,100 @@ export default function CabinetPage() {
     // Здесь будет логика входа через Telegram
   }
 
+  const loginMethods = [
+    {
+      id: 'phone' as LoginMethod,
+      title: 'Телефон',
+      description: 'Звонок',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      color: '#1976D2'
+    },
+    {
+      id: 'contract' as LoginMethod,
+      title: 'Договор',
+      description: 'Номер и пароль',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M14 2V8H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M16 13H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M16 17H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M10 9H9H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      color: '#F57C00'
+    },
+    {
+      id: 'telegram' as LoginMethod,
+      title: 'Telegram',
+      description: 'Быстрый вход',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 5L2 12.5L9 13.5M21 5L15 21L9 13.5M21 5L9 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      color: '#0088cc'
+    },
+    {
+      id: 'email' as LoginMethod,
+      title: 'Email',
+      description: 'Email и пароль',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M22 6L12 13L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      color: '#388E3C'
+    }
+  ]
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        {/* Левая панель */}
+        {/* Левая панель с вкладками */}
         <div className={styles.sidebar}>
           <Link href="/" className={styles.logo}>
-            <div className={styles.logoIcon}>
-              <div className={styles.logoColor1}></div>
-              <div className={styles.logoColor2}></div>
-              <div className={styles.logoColor3}></div>
-            </div>
-            <span className={styles.logoText}>ПЖ19</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt="ПЖ19"
+              className={styles.logoImage}
+            />
           </Link>
           
           <h1 className={styles.sidebarTitle}>Вход в личный кабинет</h1>
           <p className={styles.sidebarSubtitle}>Выберите способ входа</p>
           
           <div className={styles.methodsList}>
-            <button
-              className={`${styles.methodItem} ${loginMethod === 'phone' ? styles.methodItemActive : ''}`}
-              onClick={() => setLoginMethod('phone')}
-            >
-              <div className={styles.methodIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22 16.92V19.92C22 20.4923 21.7893 21.0411 21.4142 21.4161C21.0391 21.7912 20.4904 22.002 19.918 22.002C15.418 21.992 11.0659 20.5961 7.46376 18.0067C4.04571 15.6188 1.45319 12.3748 0.0529785 8.66322C-0.0174245 8.09863 0.0957716 7.52679 0.336131 7.00981C0.576491 6.49283 0.936697 6.04785 1.38 5.71201L4.31 3.52201C4.75856 3.18574 5.30847 3.00206 5.875 3.00201C6.44153 3.00196 6.99144 3.18554 7.44 3.52201L10.37 6.14201C10.8186 6.47848 11.1413 6.95031 11.2881 7.48159C11.4349 8.01287 11.3976 8.5744 11.182 9.08201L9.73 12.352C11.2796 14.8307 13.6193 16.7082 16.35 17.642L19.62 16.012C20.1298 15.7963 20.6931 15.7591 21.2251 15.9064C21.7571 16.0538 22.2292 16.3775 22.565 16.827L22.58 16.852H22.59L22.6 16.872C22.775 17.085 22.898 17.337 22.958 17.606C23.018 17.875 23.014 18.153 22.945 18.42C22.876 18.687 22.745 18.936 22.562 19.146C22.379 19.356 22.15 19.522 21.89 19.632L19.98 20.492L19.96 20.502L19.94 20.512C19.73 20.597 19.5 20.642 19.268 20.642H18.92L16 18.862L13.08 20.642H12.732C12.5 20.642 12.27 20.597 12.06 20.512L12.04 20.502L12.02 20.492L10.11 19.632C9.85 19.522 9.621 19.356 9.438 19.146C9.255 18.936 9.124 18.687 9.055 18.42C8.986 18.153 8.982 17.875 9.042 17.606C9.102 17.337 9.225 17.085 9.4 16.872L9.41 16.852H9.42L9.43 16.832C9.765 16.3825 10.0877 15.9107 10.434 15.459L11.182 14.232C11.3976 13.7244 11.4349 13.1629 11.2881 12.6316C11.1413 12.1003 10.8186 11.6285 10.37 11.292L7.44 8.67201C6.99144 8.33554 6.44153 8.15196 5.875 8.15201C5.30847 8.15206 4.75856 8.33574 4.31 8.67201L1.38 10.862C0.936697 11.1979 0.576491 11.6428 0.336131 12.1598C0.0957716 12.6768 -0.0174245 13.2486 0.0529785 13.8132C1.45319 17.5248 4.04571 20.7688 7.46376 23.1567C11.0659 25.7461 15.418 27.142 19.918 27.152C20.4904 27.152 21.0391 26.9412 21.4142 26.5661C21.7893 26.1911 22 25.6423 22 25.07V22.07C22 21.4977 21.7893 20.9489 21.4142 20.5739C21.0391 20.1988 20.4904 19.988 19.918 19.988Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className={styles.methodContent}>
-                <div className={styles.methodName}>Телефон</div>
-                <div className={styles.methodDescription}>SMS код</div>
-              </div>
-            </button>
-
-            <button
-              className={`${styles.methodItem} ${loginMethod === 'contract' ? styles.methodItemActive : ''}`}
-              onClick={() => setLoginMethod('contract')}
-            >
-              <div className={styles.methodIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M14 2V8H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M16 13H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M16 17H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M10 9H9H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className={styles.methodContent}>
-                <div className={styles.methodName}>Договор</div>
-                <div className={styles.methodDescription}>Номер и пароль</div>
-              </div>
-            </button>
-
-            <button
-              className={`${styles.methodItem} ${loginMethod === 'telegram' ? styles.methodItemActive : ''}`}
-              onClick={() => setLoginMethod('telegram')}
-            >
-              <div className={styles.methodIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21 5L2 12.5L9 13.5M21 5L15 21L9 13.5M21 5L9 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className={styles.methodContent}>
-                <div className={styles.methodName}>Telegram</div>
-                <div className={styles.methodDescription}>Быстрый вход</div>
-              </div>
-            </button>
-
-            <button
-              className={`${styles.methodItem} ${loginMethod === 'email' ? styles.methodItemActive : ''}`}
-              onClick={() => setLoginMethod('email')}
-            >
-              <div className={styles.methodIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M22 6L12 13L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className={styles.methodContent}>
-                <div className={styles.methodName}>Email</div>
-                <div className={styles.methodDescription}>Email и пароль</div>
-              </div>
-            </button>
+            {loginMethods.map((method) => (
+              <button
+                key={method.id}
+                className={`${styles.methodTab} ${loginMethod === method.id ? styles.methodTabActive : ''}`}
+                onClick={() => setLoginMethod(method.id)}
+              >
+                <div className={styles.methodIcon}>
+                  {method.icon}
+                </div>
+                <div className={styles.methodContent}>
+                  <div className={styles.methodName}>{method.title}</div>
+                  <div className={styles.methodDescription}>{method.description}</div>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Правая часть - форма входа */}
+        {/* Правая часть с формой */}
         <div className={styles.content}>
           {loginMethod === 'phone' && (
             <div className={styles.formContainer}>
               <h2 className={styles.formTitle}>Вход по телефону</h2>
-              <p className={styles.formSubtitle}>Введите номер телефона для получения кода подтверждения</p>
+              <p className={styles.formSubtitle}>Введите свой номер телефона, чтобы подтвердить вход звонком.</p>
               
               <div className={styles.formGroup}>
                 <label htmlFor="phone" className={styles.label}>Номер телефона</label>
@@ -189,8 +254,53 @@ export default function CabinetPage() {
               </div>
 
               <button className={styles.submitButton} onClick={handleGetCode}>
-                Получить код
+                Войти
               </button>
+            </div>
+          )}
+
+          {/* Модальное окно */}
+          {showModal && (
+            <div className={styles.modalOverlay} onClick={handleCloseModal}>
+              <div className={`${styles.modalContent} ${modalType === 'success' ? styles.modalSuccess : styles.modalError}`} onClick={(e) => e.stopPropagation()}>
+                <button className={styles.modalClose} onClick={handleCloseModal}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+                
+                <div className={styles.modalIconContainer}>
+                  {modalType === 'success' ? (
+                    <div className={styles.modalIconSuccess}>
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  ) : (
+                    <div className={styles.modalIconError}>
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M12 8V12M12 16H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                
+                <h3 className={styles.modalTitle}>
+                  {modalType === 'success' ? 'Вход выполнен успешно!' : 'Ошибка входа'}
+                </h3>
+                
+                <p className={styles.modalText}>
+                  {modalType === 'success' 
+                    ? 'Вы успешно вошли в личный кабинет. Перенаправление...' 
+                    : errorMessage}
+                </p>
+                
+                <button className={`${styles.modalButton} ${modalType === 'success' ? styles.modalButtonSuccess : styles.modalButtonError}`} onClick={handleCloseModal}>
+                  {modalType === 'success' ? 'Перейти в кабинет' : 'Понятно'}
+                </button>
+              </div>
             </div>
           )}
 
@@ -207,7 +317,12 @@ export default function CabinetPage() {
                   className={styles.input}
                   placeholder="Введите номер договора"
                   value={contractNumber}
-                  onChange={(e) => setContractNumber(e.target.value)}
+                  onChange={(e) => {
+                    // Разрешаем только цифры и ограничиваем до 6 символов
+                    const value = e.target.value.replace(/\D/g, '').slice(0, 6)
+                    setContractNumber(value)
+                  }}
+                  maxLength={6}
                 />
               </div>
 
@@ -235,6 +350,9 @@ export default function CabinetPage() {
               <p className={styles.formSubtitle}>Нажмите кнопку для авторизации через Telegram бота</p>
               
               <button className={styles.telegramButton} onClick={handleTelegramLogin}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 5L2 12.5L9 13.5M21 5L15 21L9 13.5M21 5L9 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
                 Войти через Telegram
               </button>
             </div>
@@ -279,4 +397,3 @@ export default function CabinetPage() {
     </div>
   )
 }
-

@@ -307,3 +307,62 @@
   }
 }
 
+@media (max-width: 480px) {
+  .footer {
+    padding: 30px 12px 20px;
+  }
+
+  .footerGrid {
+    gap: 24px;
+  }
+
+  .footerSection {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .footerTitle {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .footerText {
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .nav {
+    align-items: flex-start;
+  }
+
+  .navLink {
+    font-size: 12px;
+  }
+
+  .contacts {
+    align-items: flex-start;
+  }
+
+  .contactItem {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .contactLabel {
+    font-size: 9px;
+  }
+
+  .contactLink {
+    font-size: 12px;
+  }
+
+  .copyright {
+    margin-top: 24px;
+    padding-top: 16px;
+  }
+
+  .copyright p {
+    font-size: 10px;
+  }
+}
+
